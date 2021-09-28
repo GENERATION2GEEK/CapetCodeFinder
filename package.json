@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "discord.js": "^13.1.0",
+    "imap": "^0.8.19",
+    "lodash": "^4.17.21",
+    "pdf-parser": "^1.0.5"
+  }
+}
