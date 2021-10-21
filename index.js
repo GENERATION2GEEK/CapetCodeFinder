@@ -12,13 +12,13 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 var lastcode = "";
 var facture_day = "28";
 
-var gmail_account = ''; // your gmail account
+var gmail_account = ""; // your gmail account
 
-var cron_download_facture = '0 0 0' + facture_day + ' * *'; // facture day at 00:00
-cron_download_facture = '0 * * * * *';
+var cron_download_facture = '0 0 0' + facture_day + ' * *'; // facture day at 00:00:00
+
 var cron_reminder = '0 0 8 10 * *'; // 8h du matin le 10 du mois
 
-var discord_user_id = "389176492963135489"; // discord user id
+var discord_user_id = ""; // discord user id
 
 client.on('ready', async() => {
 	console.log('Ready!');
@@ -103,4 +103,4 @@ function getFacture(datestr, account, callback) {
 }
 
 
-client.login('');
+client.login('TOKEN');
