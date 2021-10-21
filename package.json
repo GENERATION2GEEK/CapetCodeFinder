@@ -6,6 +6,7 @@
     "fs": "^0.0.1-security",
     "imap": "^0.8.19",
     "lodash": "^4.17.21",
+    "node-cron": "^3.0.0",
     "pdf-parser": "^1.0.5"
   }
 }
