@@ -103,4 +103,4 @@ function getFacture(datestr, account, callback) {
 }
 
 
-client.login('ODkyMTM4OTk0MjQ1MTg5NjQz.YVIjLw.pGZGnPpRlgnAaQS0d-m31f4CmPM');
+client.login('');
