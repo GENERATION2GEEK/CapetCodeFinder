@@ -3,6 +3,7 @@ var fs      = require('fs');
 var downloadEmailAttachments = require('download-email-attachments');
 var cron = require('node-cron');
 var pdfParser = require('pdf-parser');
+const https = require('https');
 
 const { Client, Intents } = require('discord.js');
 
@@ -10,15 +11,25 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 
 
 var lastcode = "";
-var facture_day = "28";
+var facture_day = "29";
 
-var gmail_account = ""; // your gmail account
+var gmail_account = '"email@gmail.com":password@imap.gmail.com'; // your gmail account
 
-var cron_download_facture = '0 0 0' + facture_day + ' * *'; // facture day at 00:00:00
+var cron_download_facture = '0 * * ' + facture_day + ' * *'; // facture day at 00:00:00
 
 var cron_reminder = '0 0 8 10 * *'; // 8h du matin le 10 du mois
+// cron_reminder = '0 49 12 12 * *'; // DEBUG
 
-var discord_user_id = ""; // discord user id
+var discord_user_id = "YOUR_USER_ID"; // discord user id
+
+// Send a sms message through the Free Mobile API
+async function send_sms(message) {
+  message_encoded = encodeURIComponent(message);
+  var url = "https://smsapi.free-mobile.fr/sendmsg?user=USERID&pass=PASS&msg=" + message_encoded;
+  https.get(url, (resp) => {}).on("error", (err) => {
+    console.log("Error: " + err.message);
+  });
+}
 
 client.on('ready', async() => {
 	console.log('Ready!');
@@ -28,10 +39,11 @@ client.on('ready', async() => {
 
   
   
-  cron.schedule(cron_download_facture, () => { // at 00h05 every day
+  cron.schedule(cron_download_facture, () => {
     var date = new Date();
 
-    var datestr = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + (date.getDate()-2);
+    // var datestr = "2021" + "-" + "12" + "-" + "26"; // DEBUG
+    var datestr = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + (date.getDate()-5);
     getFacture(datestr, gmail_account, function(result) {
       if(result.error) { 
         console.log(result.error);
@@ -53,6 +65,7 @@ client.on('ready', async() => {
                   lastcode = new_code;
                   // console.log("New code : " + lastcode); // debug
                   discord_user.send(lastcode);
+                  send_sms(lastcode);
                 }
             
               }
@@ -64,12 +77,15 @@ client.on('ready', async() => {
       
   });
   
-  cron.schedule(cron_reminder, () =>  { // Rappel du code avant le changement
-    if(lastcode != "") {
-      discord_user.send(lastcode);
-    }
-  });
+  
 
+});
+
+cron.schedule(cron_reminder, () =>  { // Rappel du code avant le changement
+  if(lastcode != "") {
+    discord_user.send("Rappel : " + lastcode);
+    send_sms("Rappel : " + lastcode);
+  }
 });
 
 function delFacture() {
@@ -101,6 +117,5 @@ function getFacture(datestr, account, callback) {
   }, callback);
   
 }
-
 
 client.login('TOKEN');
