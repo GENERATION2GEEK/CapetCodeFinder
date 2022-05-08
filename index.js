@@ -27,14 +27,13 @@ var email = process.env.GMAIL_ID;
 var password = process.env.GMAIL_APP_PASS;
 
 var gmail_account = '"' + email + '":' + password + '@imap.gmail.com';
-//var cron_download_facture = '0 * * ' + facture_day + ' * *'; // facture day at 00:00:00
-cron_download_facture = '0 * * * * *'; // facture day at 00:00:00
+var cron_download_facture = '0 * * ' + facture_day + ' * *'; // facture day at 00:00:00
 
 
 
 var discord_users = process.env.DISCORD_USERS.split(",");
 
-var cron_reminder = '0 * * * * *'; // rappel à 7h du matin
+var cron_reminder = '0 0 7 * * *'; // rappel à 7h du matin
 
 function parseFactureDate(codestr) {
   var monthsarray = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
