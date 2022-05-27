@@ -110,7 +110,7 @@ cron.schedule(cron_reminder, () =>  { // Rappel du code avant le changement
   if (lastcode == "") {return;}
   var change_date = parseFactureDate(lastcode);
   var datenow = new Date();
-  if (change_date.getDay() == datenow.getDay()) {
+  if (change_date.getDate() == datenow.getDate()) {
     send_discord_msg("Rappel : " + lastcode);
     send_sms("Rappel : " + lastcode);
   }
