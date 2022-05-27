@@ -38,11 +38,11 @@ var cron_reminder = '0 0 7 * * *'; // rappel à 7h du matin
 function parseFactureDate(codestr) {
   var monthsarray = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
   codestr = codestr.split(' ');
-  var day = codestr[10];
+  var day = parseInt(codestr[10], 10);
   var monthname = codestr[11];
   var year = codestr[12];
-  var month = monthsarray.indexOf(monthname) + 1;
-  var date = new Date(year, month, day);
+  var month = monthsarray.indexOf(monthname);
+  var date = new Date(year, month, day+1, 0, 0, 10);
   return date;
 }
 
