@@ -3,11 +3,12 @@
     "base64-stream": "^1.0.0",
     "discord.js": "^13.1.0",
     "dotenv": "^16.0.0",
-    "download-email-attachments": "^2.0.1",
     "fs": "^0.0.1-security",
     "imap": "^0.8.19",
     "lodash": "^4.17.21",
+    "moment": "^2.29.4",
     "node-cron": "^3.0.0",
-    "pdf-parser": "^1.0.5"
+    "pdf-parser": "^1.0.5",
+    "pino": "^8.15.0"
   }
 }
